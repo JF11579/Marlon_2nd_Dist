@@ -3,7 +3,9 @@ library(tidyverse)
 library(ggplot2)
 
 # Data
-NY_second<- read.csv("NY_2nd_race.csv")
+NY_second<-read.csv("NY_Second.csv")
+getwd()
+#gathered_races<- read.csv("Gathered_Races.csv")
 dim(NY_second)
 head(NY_second)
 #First aggregate per year
@@ -31,5 +33,36 @@ stocks
 #
 gather(stocks, "stock", "price", -time)
 #
-four<- NY_second%>% gather("Race","Pop",African_American:White)
-four
+gathered_races<- NY_second%>% gather("Race","Pop",African_American:White)
+gathered_races
+# 
+head(gathered_races)
+str(gathered_races)
+rename(gathered_races,Town =ï..Town)
+head(gathered_races)
+# Column one picked up a weird name.
+#Cant change it within R.  Will export, change, re-import
+write.csv(gathered_races,"Gathered_races.csv")
+gathered_races<-read.csv("Gathered_Races.csv")
+head(gathered_races)
+#
+
+# now aggregate group by
+group1<- gathered_races%>%
+          group_by(Year,Town,Race)%>%
+          summarise(tot=sum(Pop))
+group1
+View(group1)
+group2<-gathered_races%>%
+  group_by(Year,Race)%>%
+  summarise(tot=sum(Pop))
+group2
+View(group2)
+# Line chart showing races over the years in entire NY2
+#First need to group by YEAR
+ByYear<- aggregate(group1$tot, by=list(Year=group1$Year),FUN=sum)
+ByYear
+#Plot
+a<- ggplot(group2,aes(x=Year, y=tot,color=Race,group=Race))+
+  geom_line(size =2)
+a
