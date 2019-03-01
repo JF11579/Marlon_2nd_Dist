@@ -123,22 +123,49 @@ dim(Maher_King_2016)
 #
 Zeldin_Bishop_2014<- read.csv("Zeldin_Bishop_2014.csv")
 dim(Zeldin_Bishop_2014)
+###########
+#Now subset to only relevant columns
+Bishop_Altsch_2010_SHORT<-select(Bishop_Altsch_2010,committee_name,
+                                 transaction_id,contributor_city,
+                                 contributor_zip,contribution_receipt_amount,
+                                 fec_election_year )
+dim(Bishop_Altsch_2010_SHORT)
+#
+Bishop_Altshc_2012_SHORT<- select(Bishop_Altshc_2012,committee_name,
+                                  transaction_id,contributor_city,
+                                  contributor_zip,contribution_receipt_amount,
+                                  fec_election_year)
+dim(Bishop_Altshc_2012_SHORT)
+#
+Gregory_King_2016_SHORT<- select(Gregory_King_2016,committee_name,
+                                 transaction_id,contributor_city,
+                                 contributor_zip,contribution_receipt_amount,
+                                 fec_election_year)
+dim(Gregory_King_2016_SHORT)
+#
+King_2018_SHORT<-select(King_2018,committee_name,
+                        transaction_id,contributor_city,
+                        contributor_zip,contribution_receipt_amount,
+                        fec_election_year)
+dim(King_2018_SHORT)
+#
+Maher_King_2016_SHORT<-select(Maher_King_2016, committee_name,
+                              transaction_id,contributor_city,
+                              contributor_zip,contribution_receipt_amount,
+                              fec_election_year)
+dim(Maher_King_2016_SHORT)
+#
+Zeldin_Bishop_2014_SHORT<- select(Zeldin_Bishop_2014,committee_name,
+                                  transaction_id,contributor_city,
+                                  contributor_zip,contribution_receipt_amount,
+                                  fec_election_year)
+dim(Zeldin_Bishop_2014_SHORT)
+
 
 
 ########### Now bind_rows them all together
-bound<-bind_rows(Bishop_Altsch_2010,Bishop_Altshc_2012,
-                 Gregory_King_2016,King_2018,Maher_King_2016,
-                 Zeldin_Bishop_2014)
+bound<-bind_rows(Bishop_Altsch_2010_SHORT,Bishop_Altshc_2012_SHORT,
+                 Gregory_King_2016_SHORT,King_2018_SHORT,Maher_King_2016_SHORT,
+                 Zeldin_Bishop_2014_SHORT)
 warnings()
 dim(bound)
-bound<-bind_rows(Bishop_Altsch_2010,Bishop_Altshc_2012)
-dim(bound)
-bound<-bind_rows(bound,King_2018)
-dim(bound)
-bound<-bind_rows(bound,Zeldin_Bishop_2014)
-dim(bound)
-#
-bound_also<- bind_rows(Gregory_King_2016,Maher_King_2016,Zeldin_Bishop_2014)
-dim(bound_also)
-bound<-bind_rows(bound,bound_also)
-
