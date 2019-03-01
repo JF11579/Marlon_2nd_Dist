@@ -38,7 +38,7 @@ gathered_races
 # 
 head(gathered_races)
 str(gathered_races)
-rename(gathered_races,Town =ï..Town)
+#rename(gathered_races,Town =ï..Town)
 head(gathered_races)
 # Column one picked up a weird name.
 #Cant change it within R.  Will export, change, re-import
@@ -64,5 +64,43 @@ ByYear<- aggregate(group1$tot, by=list(Year=group1$Year),FUN=sum)
 ByYear
 #Plot
 a<- ggplot(group2,aes(x=Year, y=tot,color=Race,group=Race))+
-  geom_line(size =2)
+  geom_line(size =2)+
+  ggtitle("Changes in NYS 2nd 2010-2017")
 a
+#Filter by town
+DeerPark<- filter(group1, Town=="DeerPark")
+DeerPark
+DeerParkPlot<-  ggplot(DeerPark,aes(x=Year, y=tot,color=Race,group=Race))+
+  geom_line(size =2)+
+  ggtitle("Changes in DeerPark 2010-2017")
+DeerParkPlot
+#
+NorthAmityville<- filter(group1, Town=="NorthAmityville")
+NorthAmityville
+NorthAmityvillePlot<-ggplot(NorthAmityville,aes(x=Year, y=tot,color=Race,group=Race))+
+  geom_line(size =2)+
+  ggtitle("Changes in North Amityville 2010-2017")
+NorthAmityvillePlot
+#
+NorthBabylon<- filter(group1, Town=="NorthBabylon")
+NorthBabylon
+NorthBabylonPlot<-ggplot(NorthBabylon,aes(x=Year, y=tot,color=Race,group=Race))+
+  geom_line(size =2)+
+  ggtitle("Changes in North Babylon 2010-2017")
+NorthBabylonPlot
+#
+WestBabylon<- filter(group1, Town=="WestBabylon")
+WestBabylon
+WestBabylonPlot<-ggplot(WestBabylon,aes(x=Year, y=tot,color=Race,group=Race))+
+  geom_line(size =2)+
+  ggtitle("Changes in West Babylon 2010-2017")
+WestBabylonPlot
+#
+WheatleyHeights<- filter(group1, Town=="WheatleyHeights")
+WheatleyHeights
+WheatleyHeightsPlot<-ggplot(WheatleyHeights,aes(x=Year, y=tot,color=Race,group=Race))+
+  geom_line(size =2)+
+  ggtitle("Changes in Wheatley Heights 2010-2017")
+WheatleyHeightsPlot
+
+
