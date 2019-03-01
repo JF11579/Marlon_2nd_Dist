@@ -168,4 +168,59 @@ bound<-bind_rows(Bishop_Altsch_2010_SHORT,Bishop_Altshc_2012_SHORT,
                  Gregory_King_2016_SHORT,King_2018_SHORT,Maher_King_2016_SHORT,
                  Zeldin_Bishop_2014_SHORT)
 warnings()
-dim(bound)
+dim(bound)# 29517     6
+####################
+#Now make sure there are no dupe rows
+No_Dupes_Bound<- bound%>%distinct(bound$transaction_id, .keep_all = TRUE)
+dim(No_Dupes_Bound) #29178     7  Huh.  400 dupes removed but a column added?
+head(No_Dupes_Bound)
+#######################
+# Now extract only the rows with the towns that currently make up NY2nd.
+target<- c("Deer Park","North Amityville","North Babylon","West Babylon","Wheatley Heights")
+SubjectTowns<- filter_all(No_Dupes_Bound,No_Dupes_Bound$contributor_city %>% target)
+
+SubjectTowns<- select(filter(No_Dupes_Bound,contributor_city=='Deer Park'|contributor_city=='North Amityville'|
+                               contributor_city== 'North Babylon' | contributor_city== 'West Babylon' | contributor_city == 'Wheatley Heights'))
+dim(SubjectTowns)
+View(No_Dupes_Bound)
+head(No_Dupes_Bound)
+Towns<- No_Dupes_Bound
+write.csv(Towns,"Towns.csv")
+dim(Towns)
+head(Towns)
+Towns<-read.csv("Towns.csv")
+head(Towns)
+#
+SubjectTowns  <-Towns%>%
+          select(Towns$transaction_id,Towns$contributor_city,Towns$contributor_zip,Towns$contribution_receipt_amount,Towns$fec_election_year, Towns$committee_name)%>%
+           filter(contributor_city=='Deer Park'|contributor_city=='North Amityville'|
+           contributor_city== 'North Babylon' | contributor_city== 'West Babylon' | contributor_city == 'Wheatley Heights')
+dim(SubjectTowns) 
+dim(No_Dupes_Bound)
+rlang::last_error()
+#
+msleep<- ggplot2::msleep
+glimpse(msleep)
+head(msleep)
+msleep %>% 
+  select(order, name, sleep_total) %>% 
+  filter(order == "Didelphimorphia")
+#SubjectTowns  <-Towns%>%
+SubjectTowns<-select(Towns, transaction_id,contributor_city,contributor_zip,contribution_receipt_amount,fec_election_year, committee_name)
+SubjectTowns_2<-filter(contributor_city=='Deer Park'|contributor_city=='North Amityville'|
+                         contributor_city== 'North Babylon' | contributor_city== 'West Babylon' | contributor_city == 'Wheatley Heights')
+
+SubjectTowns_3<- Towns%>%select(Towns, transaction_id,contributor_city,
+                                contributor_zip,contribution_receipt_amount,
+                                fec_election_year, committee_name)%>%
+  filter(contributor_city=='Deer Park'|contributor_city=='North Amityville'|
+           contributor_city== 'North Babylon' | contributor_city== 'West Babylon' | contributor_city == 'Wheatley Heights')        
+#
+#Now get the number of contributions per town per year
+Towns_manual<-read.csv("Towns_manually_filtered.csv")
+write.csv(Towns_manual,"Towns_manual.csv")
+Towns_manual<-read.csv("Towns_manual.csv")
+head(Towns_manual)
+T<- Towns_manual%>% group_by(town,year)%>%
+    tally()
+T
