@@ -102,5 +102,43 @@ WheatleyHeightsPlot<-ggplot(WheatleyHeights,aes(x=Year, y=tot,color=Race,group=R
   geom_line(size =2)+
   ggtitle("Changes in Wheatley Heights 2010-2017")
 WheatleyHeightsPlot
+####################################################
+#####################################################
+###################################################
+#  ESTIMATE VOTES BY COUNTING CONTRIBUTIONS BY CONTRIBUTOR CITY
+Bishop_Altsch_2010<-read.csv("Bishop_Altsch_2010.csv")
+dim(Bishop_Altsch_2010)
+#
+Bishop_Altshc_2012<-read.csv("Bishop_Altshc_2012.csv")
+dim(Bishop_Altshc_2012)
+#
+Gregory_King_2016<-read.csv("Gregory_King_2016.csv")
+dim(Gregory_King_2016)
+#
+King_2018<-read.csv("King_2018.csv")
+dim(King_2018)
+#
+Maher_King_2016<- read.csv("Maher_King_2016.csv")
+dim(Maher_King_2016)
+#
+Zeldin_Bishop_2014<- read.csv("Zeldin_Bishop_2014.csv")
+dim(Zeldin_Bishop_2014)
 
+
+########### Now bind_rows them all together
+bound<-bind_rows(Bishop_Altsch_2010,Bishop_Altshc_2012,
+                 Gregory_King_2016,King_2018,Maher_King_2016,
+                 Zeldin_Bishop_2014)
+warnings()
+dim(bound)
+bound<-bind_rows(Bishop_Altsch_2010,Bishop_Altshc_2012)
+dim(bound)
+bound<-bind_rows(bound,King_2018)
+dim(bound)
+bound<-bind_rows(bound,Zeldin_Bishop_2014)
+dim(bound)
+#
+bound_also<- bind_rows(Gregory_King_2016,Maher_King_2016,Zeldin_Bishop_2014)
+dim(bound_also)
+bound<-bind_rows(bound,bound_also)
 
